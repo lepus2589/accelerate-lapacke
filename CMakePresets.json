@@ -1,0 +1,59 @@
+{
+  "version": 2,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_INSTALL_PREFIX": "$env{HOME}/.local"
+      }
+    },
+    {
+      "name": "ninja",
+      "hidden": true,
+      "generator": "Ninja"
+    },
+    {
+      "name": "accelerate-lapacke32",
+      "inherits": [
+        "base",
+        "ninja"
+      ],
+      "binaryDir": "${sourceDir}/build/32",
+      "cacheVariables": {
+        "BUILD_INDEX64": false
+      },
+      "displayName": "LAPACKE 32bit configuration linking against Accelerate"
+    },
+    {
+      "name": "accelerate-lapacke64",
+      "inherits": [
+        "base",
+        "ninja"
+      ],
+      "binaryDir": "${sourceDir}/build/64",
+      "cacheVariables": {
+        "BUILD_INDEX64": true
+      },
+      "displayName": "LAPACKE 64bit configuration linking against Accelerate ILP64 interface"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "accelerate-lapacke32",
+      "displayName": "LAPACKE 32bit build linking against Accelerate",
+      "configurePreset": "accelerate-lapacke32"
+    },
+    {
+      "name": "accelerate-lapacke64",
+      "displayName": "LAPACKE 64bit build linking against Accelerate ILP64 interface",
+      "configurePreset": "accelerate-lapacke64"
+    }
+  ]
+}
