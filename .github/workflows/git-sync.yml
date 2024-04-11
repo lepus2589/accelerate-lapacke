@@ -1,0 +1,28 @@
+name: sync-git-mirror
+run-name: Push ${{ github.ref_type }} ${{ github.ref_name }} to git mirror
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+jobs:
+  git-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git-sync-master
+        uses: wei/git-sync@v3
+        with:
+          source_repo: "lepus2589/accelerate-lapacke"
+          source_branch: "master"
+          destination_repo: "${{ secrets.MIRROR_DESTINATION_REPO_URL }}"
+          destination_branch: "master"
+          destination_ssh_private_key: ${{ secrets.DESTINATION_SSH_PRIVATE_KEY }}
+      - name: git-sync-tags
+        uses: wei/git-sync@v3
+        with:
+          source_repo: "lepus2589/accelerate-lapacke"
+          source_branch: "refs/tags/*"
+          destination_repo: "${{ secrets.MIRROR_DESTINATION_REPO_URL }}"
+          destination_branch: "refs/tags/*"
+          destination_ssh_private_key: ${{ secrets.DESTINATION_SSH_PRIVATE_KEY }}
