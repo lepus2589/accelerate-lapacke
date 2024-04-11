@@ -1,0 +1,9 @@
+.*
+!.gitignore
+!.gitattributes
+!.github/
+
+CMakeUserPresets.json
+
+build/
+install/
