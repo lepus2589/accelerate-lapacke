@@ -43,13 +43,13 @@ if (CMAKE_HOST_SYSTEM_NAME MATCHES "Darwin")
     # The available binary Accelerate version is determined by the MacOS system
     message(STATUS "The Darwin kernel version is: ${CMAKE_HOST_SYSTEM_VERSION}")
 
-    # Mac OS X 15.0 Sequoia
     if (CMAKE_HOST_SYSTEM_VERSION VERSION_GREATER_EQUAL 24.0)
+        # Mac OS X 15.0 Sequoia or later
         message(STATUS "The MacOS version is: >=15.0")
         set(MINIMUM_MACOS_SDK_VERSION 15.0)
         set(ACCELERATE_NEW_LAPACK_VERSION 3.11.0)
-    # Mac OS X 13.3 Ventura
     elseif (CMAKE_HOST_SYSTEM_VERSION VERSION_GREATER_EQUAL 22.4)
+        # Mac OS X 13.3 Ventura or later
         message(STATUS "The MacOS version is: >=13.3,<15.0")
         set(MINIMUM_MACOS_SDK_VERSION 13.3)
         set(VALID_MACOS_SDK_VERSIONS 14.5 14.4 14.2 14.0 13.3)
@@ -57,6 +57,8 @@ if (CMAKE_HOST_SYSTEM_NAME MATCHES "Darwin")
     else ()
         message(FATAL_ERROR "You need at least MacOS 13.3 Ventura for Accelerate with BLAS/LAPACK v3.9.1!")
     endif ()
+
+    message(STATUS "The BLAS/LAPACK version provided by the Accelerate framework is: ${ACCELERATE_NEW_LAPACK_VERSION}")
 endif ()
 
 string(REGEX MATCH [=[SDKs/MacOSX(.*)\.sdk$]=] _REGEX_DUMMY "${CMAKE_OSX_SYSROOT}")
