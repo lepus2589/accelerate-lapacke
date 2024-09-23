@@ -72,14 +72,14 @@ set(CBLAS OFF CACHE BOOL "")
 set(LAPACKE ON CACHE BOOL "")
 
 # Add the $NEWLAPACK symbols to the linker flags used in try_compile()
-set(CMAKE_EXE_LINKER_FLAGS "-Wl,-alias_list,${CMAKE_CURRENT_BINARY_DIR}/new-lapack.alias")
+set(CMAKE_EXE_LINKER_FLAGS "-framework Accelerate -Wl,-alias_list,${CMAKE_CURRENT_BINARY_DIR}/new-lapack.alias")
 
 if (BUILD_INDEX64)
     # Add the $NEWLAPACK$ILP64 symbols to the linker flags used for shared libraries
-    set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-alias_list,${CMAKE_CURRENT_BINARY_DIR}/new-lapack-ilp64.alias")
+    set(CMAKE_SHARED_LINKER_FLAGS "-framework Accelerate -Wl,-alias_list,${CMAKE_CURRENT_BINARY_DIR}/new-lapack-ilp64.alias")
 else ()
     # Add the $NEWLAPACK symbols to the linker flags used for shared libraries
-    set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-alias_list,${CMAKE_CURRENT_BINARY_DIR}/new-lapack.alias")
+    set(CMAKE_SHARED_LINKER_FLAGS "-framework Accelerate -Wl,-alias_list,${CMAKE_CURRENT_BINARY_DIR}/new-lapack.alias")
 endif ()
 
 FetchContent_Declare(
