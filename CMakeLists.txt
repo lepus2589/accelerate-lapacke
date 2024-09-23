@@ -29,7 +29,7 @@ set(CMAKE_MAXIMUM_SUPPORTED_VERSION 3.29)
 
 include("./cmake/HandlePolicies.cmake" NO_POLICY_SCOPE)
 
-project(AccelerateLAPACKE VERSION 1.0.0 LANGUAGES C)
+project(AccelerateLAPACKE VERSION 1.1.0 LANGUAGES C)
 
 include(FetchContent)
 
@@ -40,8 +40,11 @@ if (NOT IS_TOP_LEVEL)
 endif ()
 
 if (CMAKE_HOST_SYSTEM_NAME MATCHES "Darwin")
-     # Mac OS X 13.3 Ventura
-    if (CMAKE_HOST_SYSTEM_VERSION VERSION_GREATER_EQUAL 22.4)
+    # Mac OS X 15.0 Sequoia
+    if (CMAKE_HOST_SYSTEM_VERSION VERSION_GREATER_EQUAL 24.0)
+        set(ACCELERATE_NEW_LAPACK_VERSION 3.11.0)
+    # Mac OS X 13.3 Ventura
+    elseif (CMAKE_HOST_SYSTEM_VERSION VERSION_GREATER_EQUAL 22.4)
         set(ACCELERATE_NEW_LAPACK_VERSION 3.9.1)
     else ()
         message(FATAL_ERROR "You need at least Mac OS X 13.3 Ventura for Accelerate with BLAS/LAPACK v3.9.1!")
